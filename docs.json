@@ -1,0 +1,902 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Documentation for BIR(Buku Interaktif Remaja)",
+    "description": "This API Documentation is for BIR(Buku Interaktif Remaja) which is a web application that provides a platform for teenagers to read and share their stories. This API Documentation provides information about the endpoints and the data that can be accessed through the API.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "description": "Localhost Server",
+      "url": "http://localhost:8000"
+    }
+  ],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "Get all books",
+        "description": "This endpoint returns all the books that are available in the database.",
+        "tags": [
+          "Books"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookid": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "music": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                 "success": {
+                   "description": "Get all list Books",
+                    "value":[
+                      {
+                        "bookid": 1,
+                        "title": "The Fault in Our Stars",
+                        "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      },
+                      {
+                        "bookid": 2,
+                        "title": "The Fault in Our Stars 2",
+                        "summary": "The Fault in Our Stars is a novel by John Green Joseph. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      }
+                    ]
+                 }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "error": {
+                    "description": "Bad Request",
+                    "value": {
+                      "message": "notNull Violation: books.summary cannot be null"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new book",
+        "description": "This endpoint allows you to create a new book in the database.",
+        "tags": [
+          "Books"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "description": "Upload a music file",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "fileimage": {
+                    "description": "Upload an image file",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "success": {
+                  "description": "Create a new book",
+                  "value": {
+                    "title": "The Fault in Our Stars",
+                    "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                    "music": "coba.mp3",
+                    "image": "coba.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookid": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "music": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Create a new book",
+                    "value": {
+                      "bookid": 1,
+                      "title": "The Fault in Our Stars",
+                      "summary": "The Fault in Our Stars is",
+                      "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                      "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                      "created_at": "2021-09-01",
+                      "updated_at": "2021-09-01"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Get a book by ID",
+        "description": "This endpoint returns a book by its ID.",
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the book",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookid": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "music": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Get a book by ID",
+                    "value": {
+                      "bookid": 1,
+                      "title": "The Fault in Our Stars",
+                      "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                      "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                      "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                      "created_at": "2021-09-01",
+                      "updated_at": "2021-09-01"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a book by ID",
+        "description": "This endpoint allows you to update a book by its ID.",
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the book",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "file": {
+                    "description": "Upload a music file",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "fileimage": {
+                    "description": "Upload an image file",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "examples": {
+                "success": {
+                  "description": "Update a book by ID",
+                  "value": {
+                    "title": "The Fault in Our Stars",
+                    "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                    "music": "coba.mp3",
+                    "image": "coba.png"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookid": {
+                      "type": "integer"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "summary": {
+                      "type": "string"
+                    },
+                    "music": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "success": {
+                      "description": "Update a book by ID",
+                      "value": {
+                        "bookid": 1,
+                        "title": "The Fault in Our Stars",
+                        "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book by ID",
+        "description": "This endpoint allows you to delete a book by its ID.",
+        "tags": [
+        "Books"
+        ],
+        "parameters": [
+        {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the book",
+            "required": true,
+            "schema": {
+            "type": "integer"
+            }
+        }
+        ],
+        "responses": {
+          "200": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                    "type": "string"
+                    }
+                }
+                },
+                "examples": {
+                  "success": {
+                      "description": "Delete a book by ID",
+                      "value": {
+                      "message": "Book deleted"
+                      }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/books/{bookId}/pages": {
+      "get": {
+        "summary": "Get a pages by book ID",
+        "description": "This endpoint returns a pages by its book ID.",
+        "tags": [
+          "Books"
+        ],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "The ID of the book",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageid": {
+                      "type": "integer"
+                    },
+                    "storytext": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "description": "Upload an image file",
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "relatedBookId": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    },
+                    "relatedBook": {
+                      "type": "object",
+                      "properties": {
+                        "bookid": {
+                          "type": "integer"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "summary": {
+                          "type": "string"
+                        },
+                        "music": {
+                          "type": "string"
+                        },
+                        "image": {
+                          "type": "string"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Get a book by ID",
+                    "value": [
+                      {
+                        "pageid": 1,
+                        "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01",
+                        "relatedBook": [
+                          {
+                            "bookid": 1,
+                            "title": "The Fault in Our Stars",
+                            "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                            "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                            "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                            "created_at": "2021-09-01",
+                            "updated_at": "2021-09-01"
+                          }
+                        ]
+                      },
+                      {
+                        "pageid": 2,
+                        "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01",
+                        "relatedBook": [
+                          {
+                            "bookid": 1,
+                            "title": "The Fault in Our Stars",
+                            "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                            "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                            "music": "a6d8a773-cf77-41e6-acd3-3e6d3e569f55-1713886967161.mp3",
+                            "created_at": "2021-09-01",
+                            "updated_at": "2021-09-01"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages": {
+      "get": {
+        "summary": "Get all pages",
+        "description": "This endpoint returns all the pages that are available in the database.",
+        "tags": [
+          "Pages"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageid": {
+                      "type": "integer"
+                    },
+                    "storytext": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "relatedBookId": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Get all list Pages",
+                    "value": [
+                      {
+                        "pageid": 1,
+                        "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "relatedBookId": 1,
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      },
+                      {
+                          "pageid": 2,
+                          "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                          "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                          "relatedBookId": 1,
+                          "created_at": "2021-09-01",
+                          "updated_at": "2021-09-01"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/{bookId}": {
+      "post": {
+        "summary": "Create a new page",
+        "description": "This endpoint allows you to create a new page in the database.",
+        "tags": [
+          "Pages"
+        ],
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "The ID of the book",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storytext": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string"
+                  }
+                }
+              },
+              "examples": {
+                "success": {
+                  "description": "Create a new page",
+                  "value": {
+                    "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                    "image": "coba.png",
+                    "relatedBookId": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageid": {
+                      "type": "integer"
+                    },
+                    "storytext": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "relatedBookId": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                    "description": "Create a new page",
+                    "value": {
+                      "pageid": 1,
+                      "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                      "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                      "relatedBookId": 1,
+                      "created_at": "2021-09-01",
+                      "updated_at": "2021-09-01"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pages/{id}": {
+      "get": {
+        "summary": "Get a page by ID",
+        "description": "This endpoint returns a page by its ID.",
+        "tags": [
+          "Pages"
+        ],
+        "parameters": [
+          {
+              "name": "id",
+              "in": "path",
+              "description": "The ID of the page",
+              "required": true,
+              "schema": {
+              "type": "integer"
+              }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageid": {
+                      "type": "integer"
+                    },
+                    "storytext": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "relatedBookId": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "examples": {
+                  "success": {
+                      "description": "Get a page by ID",
+                      "value": {
+                        "pageid": 1,
+                        "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "relatedBookId": 1,
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update a page by ID",
+        "description": "This endpoint allows you to update a page by its ID.",
+        "tags": [
+          "Pages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the page",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storytext": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "description": "Upload an image file",
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "relatedBookId": {
+                    "description": "Optional to included in request body",
+                    "type": "integer"
+                  }
+                }
+              },
+              "examples": {
+                "success": {
+                  "description": "Update a page by ID",
+                  "value": {
+                    "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                    "image": "coba.png",
+                    "relatedBookId": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pageid": {
+                      "type": "integer"
+                    },
+                    "storytext": {
+                      "type": "string"
+                    },
+                    "image": {
+                      "type": "string"
+                    },
+                    "relatedBookId": {
+                      "type": "integer"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string"
+                    }
+                  },
+                  "example": {
+                    "success": {
+                      "description": "Update a page by ID",
+                      "value": {
+                        "pageid": 1,
+                        "storytext": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
+                        "image": "0888f414-cbb0-4829-b664-b4f0de7a0f6a-1713886967465.png",
+                        "relatedBookId": 1,
+                        "created_at": "2021-09-01",
+                        "updated_at": "2021-09-01"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a page by ID",
+        "description": "This endpoint allows you to delete a page by its ID.",
+        "tags": [
+          "Pages"
+        ],
+        "parameters": [
+          {
+              "name": "id",
+              "in": "path",
+              "description": "The ID of the page",
+              "required": true,
+              "schema": {
+              "type": "integer"
+              }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "No Content",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                      "message": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "examples": {
+                  "success": {
+                    "description": "Delete a page by ID",
+                    "value": {
+                      "message": "Page and its image file deleted"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
