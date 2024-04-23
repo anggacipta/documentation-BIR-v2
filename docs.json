@@ -8,7 +8,7 @@
   "servers": [
     {
       "description": "Localhost Server",
-      "url": "http://localhost:8000"
+      "url": "http://localhost:8080"
     }
   ],
   "paths": {
@@ -139,8 +139,8 @@
                   "value": {
                     "title": "The Fault in Our Stars",
                     "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
-                    "music": "coba.mp3",
-                    "image": "coba.png"
+                    "file": "coba.mp3",
+                    "fileimage": "coba.png"
                   }
                 }
               }
@@ -313,8 +313,8 @@
                   "value": {
                     "title": "The Fault in Our Stars",
                     "summary": "The Fault in Our Stars is a novel by John Green. It is a story about two teenagers who fall in love and face the challenges of living with cancer.",
-                    "music": "coba.mp3",
-                    "image": "coba.png"
+                    "file": "coba.mp3",
+                    "fileimage": "coba.png"
                   }
                 }
               }
@@ -630,7 +630,9 @@
                     "type": "string"
                   },
                   "image": {
-                    "type": "string"
+                    "description": "Upload an image file",
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               },
